@@ -1,0 +1,1 @@
+ECHO "TEST1 %MY_VAR%"
