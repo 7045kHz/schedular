@@ -6,16 +6,13 @@ import (
 "sync"
  
 	"os/exec"
-	"github.com/7045kHz/models"
+	 "github.com/7045kHz/schedular/models"
 	)
 
 var wg sync.WaitGroup
 
 
-
-
-
-func WgExec(j Job) {
+func WgExec(j  models.Job) {
  
 	cmd := exec.Command(j.Script ,  j.Args ... ) 
 	for _,v := range j.Env {
@@ -33,16 +30,17 @@ func WgExec(j Job) {
 	}
 	fmt.Printf("CMD RESULTS: %v\n",cmd.String())
 	wg.Done()
+	return
 }
 func main()	{
 
 	var JobCount int
 	
-	var Jobs []Job
-	var Job Job
+	var Jobs []models.Job
+	var Job models.Job
 	
-	Job.Script="CMD.EXE"
-	Job.Args=append(Job.Args,"TEST2.BAT")
+	Job.Engine="CMD.EXE"
+	Job.Script="TEST2.BAT"
 	Job.Args=append(Job.Args,"/x=1")
 	Job.Env=append(Job.Env,"MY_VAR=J1")
 	Jobs = append(Jobs,Job)
@@ -50,8 +48,21 @@ func main()	{
 	Job.Env = nil
 	Job.Args = nil
 	Job.Script = ""
+	Job.Engine=""
 	Job.Script="TEST2.BAT"
 	Job.Env=append(Job.Env,"MY_VAR=J2")
+	Jobs = append(Jobs,Job)
+
+	Job.Env = nil
+	Job.Args = nil
+	Job.Script = ""
+	Job.Engine=""
+	Job.Engine, _ := exec.LookPath("powershell.exe")
+ 
+	Job.Script="TEST2.BAT"
+	Job.Script="\\%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe"
+	Job.Args=append(Job.Args,"powershell.exe")
+
 	Jobs = append(Jobs,Job)
 
 	JobCount=len(Jobs)
