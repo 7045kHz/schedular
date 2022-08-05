@@ -25,5 +25,5 @@ func WgExec(j models.Job, wg *sync.WaitGroup) {
 	}
 	fmt.Printf("CMD RESULTS: %v\n", cmd.String())
 	wg.Done()
-	return
+
 }
