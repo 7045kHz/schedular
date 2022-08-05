@@ -6,7 +6,7 @@ import (
 "sync"
  
 	"os/exec"
-	"models/job"
+	"github.com/7045kHz/models"
 	)
 
 var wg sync.WaitGroup
