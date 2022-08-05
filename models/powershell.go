@@ -1,5 +1,5 @@
 package models
 
 type PowerShell struct {
-	powerShell string
+	Path string
 }
