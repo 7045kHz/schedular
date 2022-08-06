@@ -23,17 +23,15 @@ func main() {
 	Job.Env = nil
 	Job.Args = nil
 	Job.Engine = "CMD.EXE"
-	Job.Exec, _ = utils.GetPath("cmd.exe")
-	Job.Args = append(Job.Args, "TEST1.BAT")
+	Job.Exec, _ = utils.GetPath("TEST1.BAT")
 	Job.Args = append(Job.Args, "/x=1")
 	Job.Env = append(Job.Env, "MY_VAR=J1")
 	Jobs = append(Jobs, Job)
 
 	Job.Env = nil
 	Job.Args = nil
-	Job.Exec, _ = utils.GetPath("cmd.exe")
+	Job.Exec, _ = utils.GetPath("TEST2.BAT")
 	Job.Engine = "CMD.EXE"
-	Job.Args = append(Job.Args, "TEST2.BAT")
 	Job.Env = append(Job.Env, "MY_VAR=J2")
 	Jobs = append(Jobs, Job)
 
@@ -41,7 +39,9 @@ func main() {
 	Job.Args = nil
 	Job.Engine = "POWERSHELL.EXE"
 	Job.Exec, _ = utils.GetPath("powershell.exe")
-	Job.Args = append(Job.Args, "TEST3.ps1")
+	args := []string{"-NoProfile", "-NonInteractive", ".\\TEST3.ps1"}
+	Job.Args = append(Job.Args, args...)
+	fmt.Printf("Job.Args from Powershell: %v\n", Job.Args)
 	Jobs = append(Jobs, Job)
 
 	JobCount = len(Jobs)
