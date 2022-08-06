@@ -2,6 +2,7 @@ package utils
 
 import (
 	"fmt"
+	"log"
 	"os/exec"
 )
 
@@ -12,4 +13,10 @@ func GetPath(fileName string) (path string, err error) {
 		return "", err
 	}
 	return path, nil
+}
+
+func LogFatal(err error) {
+	if err != nil {
+		log.Fatal(err)
+	}
 }

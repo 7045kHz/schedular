@@ -10,32 +10,35 @@ import (
 	"github.com/7045kHz/schedular/models"
 )
 
-// (stdOut string, stdErr string, err error)
 func WgExec(j models.Job, wg *sync.WaitGroup) (stdOut string, stdErr string, err error) {
 
-	cmd := exec.Command(j.Exec, j.Args...)
+	cmd := exec.Command(j.Exec)
 	for _, v := range j.Env {
+
 		cmd.Env = append(cmd.Env, v)
-		fmt.Printf("WgExec %v, Args - %v, Env = %v\n", j.Exec, j.Args, v)
+		if j.Verbose == 1 {
+			fmt.Printf("Adding Env for Job [%v], Env = %v\n", j.Name, v)
+
+		}
 	}
 
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	// var stdout bytes.Buffer
-	// var stderr bytes.Buffer
-	//cmd.Stdout = &stdout
-	//cmd.Stderr = &stderr
+	for _, v := range j.Args {
+		cmd.Args = append(cmd.Args, v)
+		if j.Verbose == 1 {
+			fmt.Printf("Adding Args for Job [%v],  Args - %v\n", j.Name, v)
+		}
+	}
+	if j.Verbose == 1 {
+		cmd.Stdout = os.Stdout
+		cmd.Stderr = os.Stderr
+	}
 
 	err = cmd.Run()
 	if err != nil {
-		fmt.Printf("CMD RUN Error: %v\n", err)
+		fmt.Printf("JOB [%s] RUN Error: %v\n", j.Name, err)
 	}
-	fmt.Printf("CMD EXECUTED: %v\n", cmd.String())
+	fmt.Printf("JOB [%s] EXECUTED: %v %v \n", j.Name, j.Exec, j.Args)
 
-	// stdOut, stdErr = stdout.String(), stderr.String()
-
-	// fmt.Printf("STDOUT: %s\n", stdOut)
-	// fmt.Printf("STDERR: %s\n", stdErr)
 	wg.Done()
 	return
 }

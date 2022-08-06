@@ -1,1 +1,1 @@
-Get-ADUser hangluu -Property MemberOf,Name | Select-Object -ExpandProperty MemberOf   
+Get-ADUser Administrator -Property MemberOf,Name | Select-Object -ExpandProperty MemberOf   

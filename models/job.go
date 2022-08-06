@@ -1,8 +1,10 @@
 package models
 
 type Job struct {
-	Engine string
-	Exec   string
-	Args   []string
-	Env    []string
+	Name    string   `json:"name"`
+	Engine  string   `json:"engine"`
+	Exec    string   `json:"exec"`
+	Verbose int      `json:"verbose"`
+	Args    []string `json:"args"`
+	Env     []string `json:"env"`
 }
