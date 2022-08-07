@@ -38,17 +38,17 @@ END ;
 
 ## Insert into table
 
+Note: Job_Schedule is defined as day:hour:min starting at 0 for each
+Sunday at 4:01PM would be 0:16:1. Multiple schedules are seperated by comma.
+
 ```sql
 insert into [OSDISCOVERY].[dbo].[JOB_INVENTORY] (
     [Name]
     ,[Execution_Server]
     ,[Enabled]
-    ,[Job_Definition]
-    ,[Days]
-    ,[Hour]
-    ,[Minute]
+    ,[Job_Schedule]
     ,[Created_On]
-    ,[Last_Updated] ) values ('Windows PowerShell Test','P330.RSYSLAB.COM', 1,'', '[0,1,2,3,4,5,6]', 11, 30, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+    ,[Last_Updated] ) values ('Windows PowerShell Test','P330.RSYSLAB.COM', 1, '0:12:10,4:13:10', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 ```
 
 ## JSON Job Definition
@@ -86,7 +86,7 @@ DECLARE @json NVARCHAR(4000) = N'{
     "Args" : ["/k",".\\TEST1.BAT"]
 }';
 -- select isjson(@json) ;
-update 	  [OSDISCOVERY].[dbo].[JOB_INVENTORY] 
+update [OSDISCOVERY].[dbo].[JOB_INVENTORY] 
 set [Job_Definition] = @json
 where Id = 2;
 
