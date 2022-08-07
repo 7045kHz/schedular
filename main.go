@@ -24,6 +24,7 @@ func init() {
 	gotenv.Load()
 
 }
+
 func main() {
 
 	var JobCount int
@@ -32,6 +33,7 @@ func main() {
 	mssqldb := mssql.ConnectDB()
 	// Get All Jobs - for now
 	DBJobs := schedule.GetNowJobs(mssqldb, now)
+
 	var Jobs []models.Job
 
 	// look over returned Jobs from DB and use Jobs.Job_Definition to create a
@@ -52,6 +54,7 @@ func main() {
 	}
 	//	fmt.Printf("Jobs after append: %v\n", Jobs)
 	JobCount = len(Jobs)
+
 	fmt.Printf("Starting wait group for [%d] jobs\n", JobCount)
 
 	wg.Add(JobCount) // indicate we are going to wait for one thing
