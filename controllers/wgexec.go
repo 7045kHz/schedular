@@ -10,6 +10,8 @@ import (
 	"github.com/7045kHz/schedular/models"
 )
 
+type Controller struct{}
+
 func WgExec(j models.Job, wg *sync.WaitGroup) (stdOut string, stdErr string, err error) {
 
 	cmd := exec.Command(j.Exec)
