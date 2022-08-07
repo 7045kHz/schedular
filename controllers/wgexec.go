@@ -2,17 +2,17 @@ package controllers
 
 import (
 	//	"bytes"
+	"database/sql"
 	"fmt"
 	"os"
 	"os/exec"
 	"sync"
 
 	"github.com/7045kHz/schedular/models"
+	"github.com/7045kHz/schedular/utils"
 )
 
-type Controller struct{}
-
-func WgExec(j models.Job, wg *sync.WaitGroup) (stdOut string, stdErr string, err error) {
+func WgExec(j models.Job, wg *sync.WaitGroup, mssqldb *sql.DB) (stdOut string, stdErr string, err error) {
 
 	cmd := exec.Command(j.Exec)
 	for _, v := range j.Env {
@@ -35,12 +35,14 @@ func WgExec(j models.Job, wg *sync.WaitGroup) (stdOut string, stdErr string, err
 		cmd.Stderr = os.Stderr
 	}
 
+	j.StartJob(mssqldb, utils.Now())
+	fmt.Printf("JOB [%s] TYPE [%v] EXECUTED: %v %v \n", j.Name, j.Engine, j.Exec, j.Args)
 	err = cmd.Run()
 	if err != nil {
 		fmt.Printf("JOB [%s] RUN Error: %v\n", j.Name, err)
 	}
-	fmt.Printf("JOB [%s] EXECUTED: %v %v \n", j.Name, j.Exec, j.Args)
 
+	j.FinishJob(mssqldb)
 	wg.Done()
 	return
 }

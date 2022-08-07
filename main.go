@@ -27,11 +27,11 @@ func init() {
 func main() {
 
 	var JobCount int
-
+	now := utils.Now()
 	// Connect to DB
 	mssqldb := mssql.ConnectDB()
 	// Get All Jobs - for now
-	DBJobs := schedule.GetAllJobs(mssqldb)
+	DBJobs := schedule.GetNowJobs(mssqldb, now)
 	var Jobs []models.Job
 
 	// look over returned Jobs from DB and use Jobs.Job_Definition to create a
@@ -39,7 +39,7 @@ func main() {
 	for _, k := range DBJobs {
 		var Job models.Job
 		json.Unmarshal([]byte(k.Job_Definition), &Job)
-
+		Job.Job_Id = k.Job_Id
 		Job.Exec, _ = utils.GetPath(Job.Exec)
 		TmpJob, _ := json.MarshalIndent(&Job, "", "	")
 		if Job.Verbose == 1 {
@@ -59,7 +59,7 @@ func main() {
 		if v.Verbose == 1 {
 			fmt.Printf("I = %v, V = %v\n", i, v)
 		}
-		go controllers.WgExec(v, &wg)
+		go controllers.WgExec(v, &wg, mssqldb)
 	}
 
 	wg.Wait() // wait for all things to be done
