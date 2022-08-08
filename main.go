@@ -29,6 +29,7 @@ func init() {
 func main() {
 
 	var JobCount int
+
 	now := utils.Now()
 	// Connect to DB
 	mssqldb := mssql.ConnectDB()

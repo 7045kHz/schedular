@@ -47,6 +47,7 @@ END ;
 
 Note: Job_Schedule is defined as day:hour:min starting at 0 for each
 Sunday at 4:01PM would be 0:16:1. Multiple schedules are seperated by comma.
+Day, Hour and Minute are set to the America/New_York timezone.
 
 ```sql
 insert into [OSDISCOVERY].[dbo].[JOB_INVENTORY] (

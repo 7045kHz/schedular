@@ -24,9 +24,11 @@ func LogFatal(err error) {
 }
 
 func Now() string {
-	weekday := time.Now().Weekday()
-	hour := time.Now().Hour()
-	minute := time.Now().Minute()
+
+	loc, _ := time.LoadLocation("America/New_York")
+	weekday := time.Now().In(loc).Weekday()
+	hour := time.Now().In(loc).Hour()
+	minute := time.Now().In(loc).Minute()
 	now := fmt.Sprintf("%d:%d:%d", weekday, hour, minute)
 	return now
 }
