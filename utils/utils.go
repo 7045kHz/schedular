@@ -3,6 +3,7 @@ package utils
 import (
 	"fmt"
 	"log"
+	"os"
 	"os/exec"
 	"time"
 )
@@ -28,4 +29,13 @@ func Now() string {
 	minute := time.Now().Minute()
 	now := fmt.Sprintf("%d:%d:%d", weekday, hour, minute)
 	return now
+}
+
+func GetHostname() (hostname string, err error) {
+	hostname, err = os.Hostname()
+	if err != nil {
+		return "", err
+	}
+
+	return hostname, err
 }

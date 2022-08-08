@@ -1,5 +1,12 @@
 # schedular
 
+## ToDo
+
+* Get Hostname and add to select
+* Create log table
+* Logging SP
+* Get Args and add list features -l -L
+
 ## SQL Server Tables
 
 ```sql

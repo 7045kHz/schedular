@@ -11,6 +11,7 @@ import (
 	"github.com/7045kHz/schedular/controllers"
 	"github.com/7045kHz/schedular/drivers/mssql"
 	"github.com/7045kHz/schedular/models"
+	"github.com/7045kHz/schedular/repository/bootstrap"
 	"github.com/7045kHz/schedular/repository/schedule"
 	"github.com/7045kHz/schedular/utils"
 	"github.com/subosito/gotenv"
@@ -33,7 +34,7 @@ func main() {
 	mssqldb := mssql.ConnectDB()
 	// Get All Jobs - for now
 	DBJobs := schedule.GetNowJobs(mssqldb, now)
-
+	bootstrap.GetOptions(mssqldb)
 	var Jobs []models.Job
 
 	// look over returned Jobs from DB and use Jobs.Job_Definition to create a
