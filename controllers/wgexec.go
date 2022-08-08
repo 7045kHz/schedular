@@ -35,7 +35,7 @@ func WgExec(j models.Job, wg *sync.WaitGroup, mssqldb *sql.DB) (stdOut string, s
 		cmd.Stderr = os.Stderr
 	}
 
-	j.StartJob(mssqldb, utils.Now())
+	j.StartJob(mssqldb, utils.Now("America/New_York"))
 	fmt.Printf("JOB [%s] TYPE [%v] EXECUTED: %v %v \n", j.Name, j.Engine, j.Exec, j.Args)
 	err = cmd.Run()
 	if err != nil {

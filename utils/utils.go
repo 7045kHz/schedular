@@ -23,9 +23,9 @@ func LogFatal(err error) {
 	}
 }
 
-func Now() string {
+func Now(tz string) string {
 
-	loc, _ := time.LoadLocation("America/New_York")
+	loc, _ := time.LoadLocation(tz)
 	weekday := time.Now().In(loc).Weekday()
 	hour := time.Now().In(loc).Hour()
 	minute := time.Now().In(loc).Minute()

@@ -34,7 +34,7 @@ func (j Job) StartJob(mssqldb *sql.DB, now string) {
 
 func (j Job) FinishJob(mssqldb *sql.DB) {
 
-	finished := utils.Now()
+	finished := utils.Now("America/New_York")
 	var inventory_table = os.Getenv("INVENTORY_TABLE")
 	sqlSelect := fmt.Sprintf("UPDATE %s SET [LAST_UPDATED]=CURRENT_TIMESTAMP, [FINISHED]='%s' WHERE Id=%d", inventory_table, finished, j.Job_Id)
 	stmt, err := mssqldb.Prepare(sqlSelect)

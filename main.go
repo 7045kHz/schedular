@@ -30,7 +30,7 @@ func main() {
 
 	var JobCount int
 
-	now := utils.Now()
+	now := utils.Now("America/New_York")
 	// Connect to DB
 	mssqldb := mssql.ConnectDB()
 	// Get All Jobs - for now
