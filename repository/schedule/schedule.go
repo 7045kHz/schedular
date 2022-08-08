@@ -62,7 +62,7 @@ func GetNowJobs(mssqldb *sql.DB, now string) (jobs []models.Jobs) {
 	//sqlTest := fmt.Sprintf("UPDATE %s SET [LAST_UPDATED]=CURRENT_TIMESTAMP  ", inventory_table)
 
 	//fmt.Println(sqlTest)
-	sqlSelect := fmt.Sprintf("SELECT [Id] ,[Name],[Execution_Server],[Enabled],[Job_Definition],[Job_Schedule],	[Created_On],[Last_Updated],[Started],[Finished] FROM  %s WHERE ENABLED=1 and Job_Schedule like '%c%s%c' and Started not like '%c%s%c' and Execution_Server='%s'", inventory_table, 37, now, 37, 37, now, 37, hostname)
+	sqlSelect := fmt.Sprintf("SELECT [Id] ,[Name],[Execution_Server],[Enabled],[Job_Definition],[Job_Schedule],	[Created_On],[Last_Updated],[Started],[Finished] FROM  %s WHERE ENABLED=1 and Job_Schedule like '%c%s%c' and (Started not like '%c%s%c' or Started is null ) and Execution_Server='%s'", inventory_table, 37, now, 37, 37, now, 37, hostname)
 	stmt, err := mssqldb.Prepare(sqlSelect)
 	utils.LogFatal(err)
 	//fmt.Printf("sqlSelect = %s\n", sqlSelect)
